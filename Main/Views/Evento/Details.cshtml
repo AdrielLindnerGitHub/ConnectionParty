@@ -1,0 +1,233 @@
+﻿@model Domains.Evento
+
+
+@{
+    ViewData["Title"] = Model.ID;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <style>
+
+        div.flex-content {
+            display: flex;
+        }
+
+        p {
+            color: black;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div>
+        <div>
+            <center>
+                @{
+                    string Path = "~/imgEvento/" + Model.ID + "/1.jpg";
+                }
+
+                <h1> @Model.Nome </h1>
+                <img src="@Url.Content(Path)" alt="" />
+                <div class="flex-content">
+                    <div>
+                        <p style=" margin:3px;">Organizado por </p>
+                    </div>
+                    <div>
+                        <p style=" margin: 3px;"> @Model.Organizador.Nome</p>
+                    </div>
+                </div>
+
+            </center>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <div class="profile-statistics">
+                    <div class="text-center mt-4 border-bottom-1 pb-3">
+                        <div class="row">
+                            <div class="col">
+                                <h3 class="m-b-0">@Model.Likes</h3><span>Likes</span>
+                            </div>
+                            <div class="col">
+                                <h3 class="m-b-0">@Model.Dislikes</h3><span>Dislikes</span>
+                            </div>
+                            <div class="col">
+                                <h3 class="m-b-0">@Model.Participantes.Count</h3><span>Marcaram presença</span>
+                            </div>
+                            <div class="col">
+                                <h3 class="m-b-0">@Model.QtdMaximaPessoas</h3><span>Máximo de pessoas</span>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="flex-content">
+                            <div>
+                                <form action=@Url.Action("Curtir") method="post">
+                                    <input type="hidden" value="@Model.ID" name="ID" />
+                                    <input type="submit" value="Curtir" style=" height: 50px;" href="" class="btn btn-primary mr-3">
+                                </form>
+                            </div>
+                            <div>
+                                <form action=@Url.Action("Descurtir") method="post">
+                                    <input type="hidden" value="@Model.ID" name="ID" />
+                                    <input type="submit" value="Descurtir" style=" height: 50px;" href="" class="btn btn-primary mr-3">
+                                </form>
+                            </div>
+                            <div>
+                                @*<label>⠀⠀⠀⠀⠀⠀⠀⠀</label>   RIP BAIANAGEM DE CARACETERE INVISIVEL :(*@
+                                <form method="post">
+                                    <input type="hidden" value="@Model.ID" name="ID" />
+                                    <input type="submit" asp-page-handler="CheckIn" value="Seguir" style=" height: 50px;" href="" class="btn btn-primary mr-3">
+                                </form>
+                            </div>
+                        </div>
+                        <hr />
+
+                        <br />
+
+                    </div>
+                </div>
+                <div class="profile-blog pt-3 border-bottom-1 pb-1">
+                    <h4 class="text-primary d-inline">Descrição do evento</h4><a href="javascript:void()" class="pull-right f-s-16"></a>
+                    <p>@Model.Descricao</p>
+                </div>
+
+                <div class="profile-interest mt-4 pb-2 border-bottom-1">
+                    <h4 class="text-primary d-inline">Tags</h4>
+
+                    @foreach (var item in Model.Tags)
+                    {
+                        <button type="button" class="btn btn-outline-primary mb-1">@item.Nome</button>
+                    }
+                </div>
+
+
+                <br />
+                <h4 class="text-primary d-inline">Datas</h4>
+                <p>@Model.DataHoraInicio</p> <p>@Model.DataHoraFim</p>
+                <br />
+                <h4 class="text-primary d-inline">Endereço</h4>
+                <p>Bairro: @Model.Bairro, Rua: @Model.Rua, Número: @Model.Numero </p>
+                <br />
+                @if (Model.Valor > 0)
+                {
+                    <h4 class="text-primary d-inline">Valor</h4>
+                    <p>@Model.Valor</p>
+                }
+                @if (Model.Valor == null)
+                {
+                    <h4 class="text-primary d-inline">Valor</h4>
+                    <p>Gratuito</p>
+                }
+
+                <br />
+                @if (Model.IdadeMinima > 0)
+                {
+                    <h4 class="text-primary d-inline">Idade mínima</h4>
+                    <p>@Model.IdadeMinima</p>
+                }
+                @if (Model.IdadeMinima == 0)
+                {
+                    <h4 class="text-primary d-inline">Idade mínima</h4>
+                    <p>Livre para todas as idades</p>
+                }
+
+                <br />
+
+                <h4 class="text-primary d-inline">Precisa apresentar documentos</h4>
+
+                @if (Model.PrecisaDocumento)
+                {
+                    <p>Sim</p>
+                }
+                else
+                {
+                    <p>Não</p>
+                }
+                <br />
+                <h4 class="text-primary d-inline">Qual o tipo do evento</h4>
+                @if (Model.EhPublico == true)
+                {
+                    <p>Público</p>
+                }
+                else
+                {
+                    <p>Privado</p>
+                }
+                <br />
+                <h4 class="text-primary d-inline">Quantidade máxima de pessoas</h4>
+                <p>@Model.QtdMaximaPessoas</p>
+                <br />
+                <hr />
+
+
+                <!-- CAMPO DE COMENTARIO TESTE-->
+
+                <section id="comment--new" class="comment">
+                    <form action=@Url.Action("Comentario") method="post" id="comment__form">
+                        <input type="hidden" value="@Model.ID" name="ID" />
+                        <textarea name="Comentario" style="width: 500px;" id="comment__textarea" placeholder="Comente sobre o evento..." cols="30" rows="4" maxlength="240"></textarea>
+                        <br />
+                        <button type="submit" class="btn btn-primary mr-3" id="comment--send">Comentar</button>
+                    </form>
+
+                </section>
+                <br />
+
+                @foreach (var item in Model.Comentarios)
+                {
+                    <div id="comments-container">
+
+                        <ul id="comments">
+                            <li class="comment">
+                                <div class="avatar">
+                                    <a href="#">
+                                        @{
+                                            int id = item.UsuarioID;
+                                            string filePath = "~/imgPessoa/" + id + ".jpg";
+                                        }
+                                        <img style="width: 100px; height: 100px;" class="rounded-circle" src="@Url.Content(filePath)" /> <!--AQUI VAI A FOTO DO USUARIO QUE COMENTOU-->
+                                    </a>
+                                </div>
+                                <div class="comment__content">
+                                    <header>
+                                        <a href="#">
+                                            <span class="user__link">@item.Usuario.Nome</span>
+                                        </a>
+                                        <a href="#" title="report abuse" class="comment__action">
+                                        </a>
+                                    </header>
+                                    <p>
+                                        @item.Texto
+                                    </p>
+                                    <footer class="comment__action--footer">
+                                        <a href="#" title="like" class="comment__action">Curtir</a>
+                                        <a href="#" title="like" class="comment__action">Descurtir</a>
+                                        <a href="#" title="reply" class="comment__action">Responder</a>
+                                    </footer>
+                                </div>
+
+                        </ul>
+                    </div>
+
+
+
+                }
+
+            </div>
+            <br />
+
+        </div>
+    </div>
+
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,209 @@
+@section Styles
+{
+    <style>
+        h1.container-black {
+            color: black;
+        }
+
+        h4.container-black {
+            color: black;
+        }
+
+        #widhei {
+            width: 500px;
+        }
+
+        div.flex-content {
+            display: flex;
+        }
+
+        label {
+            color: black;
+            border-color: black;
+        }
+
+        input {
+            border-color: black;
+            border-width: 1px;
+        }
+
+        p {
+            color: black;
+        }
+    </style>
+}
+<!-- Fechamento da tag style -->
+<!--Fechamento da tag head-->
+<!--Abertura da tag body-->
+
+
+<div class="text-center">
+    <h1 class="container-black">CADASTRE SEU EVENTO</h1>
+</div>
+<br />
+<form enctype="multipart/form-data" method="post">
+    <br />
+    <div class="form-group">
+        <center><h4 class="container-black">Informações Gerais</h4></center>
+        <br />
+        <label>Nome do evento</label>
+        <br />
+        <input style="border-color: black; color: black;" type="text" name="Nome" size="140" class="form-control" placeholder="Digite o nome do evento">
+    </div>
+    <div class="form-group">
+        <label>Descrição</label>
+        <br />
+        <input style="border-color: black; color: black;" type="text" name="Descricao" size="140" class="form-control" placeholder="Digite a descrição do evento">
+    </div>
+    <div class="flex-content">
+        <div style="margin: 2px;" class="form-group">
+            <label>Valor</label>
+            <br />
+            <input style="margin: 2px; border-color: black; color: black;" size="70" type="text" name="Valor" class="form-control" placeholder="Digite o valor do evento" />
+        </div>
+        <div style="margin: 2px;" class="form-group">
+            <label>Idade Mínima</label>
+            <br />
+            <input style="margin: 2px; border-color: black; color: black;" size="70" type="text" class="form-control" name="IdadeMinima" placeholder="Digite a idade minima">
+        </div>
+    </div>
+    <br />
+    <div class="col-sm-9">
+        <p>Necessário apresentar documento</p>
+        <div class="custom-control custom-radio">
+            <input type="radio" id="customRadio1" name="PrecisaDocumento" value="true" class="custom-control-input">
+            <label class="custom-control-label" for="customRadio1">Sim</label>
+        </div>
+        <div class="custom-control custom-radio">
+            <input type="radio" id="customRadio2" name="PrecisaDocumento" value="false" class="custom-control-input">
+            <label class="custom-control-label" for="customRadio2">Não</label>
+        </div>
+    </div>
+    <br />
+    <div class="col-sm-9">
+        <p>Tipo do evento</p>
+        <div class="custom-control custom-radio">
+            <input type="radio" id="customRadio3" name="EhPublico" value="true" class="custom-control-input">
+            <label class="custom-control-label" for="customRadio3">Público</label>
+        </div>
+        <div class="custom-control custom-radio">
+            <input type="radio" id="customRadio4" name="EhPublico" value="false" class="custom-control-input">
+            <label class="custom-control-label" for="customRadio4">Privado</label>
+        </div>
+    </div>
+    <br />
+    <label>Quantidade máxima de pessoas</label>
+    <br />
+    <input style="border-color: black; color: black;" type="text" name="QtdMaximaPessoas" size="140" class="form-control" placeholder="Informe o número máximo de convidados">
+    <br />
+    <div style="border:2px; border-color: black; color: black;">
+        <label>Selecione as tags para o evento</label>
+        <select style="width: 100%;" class="select2-multiple form-control" multiple="multiple" name="Tags" id="Tags">
+            @foreach (Domains.Tags t in ViewBag.Tags)
+            {
+                <option value="@t.ID">@t.Nome</option>
+            }
+        </select>
+    </div>
+    <br />
+    <div style="margin: 2px; border: 2px; border-color: black">
+        <label>Selecione os usuários convidados para o evento</label>
+        <select class="select2-multiple form-control" multiple="multiple" name="Participantes" id="Participantes">
+            @foreach (Domains.Usuario u in ViewBag.Usuarios)
+            {
+                <option value="@u.ID">@u.UserName</option>
+            }
+        </select>
+    </div>
+    <br />
+    <label> Escolha as fotos do seu evento</label>
+    <br />
+    <div class="custom-file">
+        <input type="file" class="custom-file-input" multiple name="Arquivo" id="customFile">
+        <label style="border-color: black; color: black;" class="custom-file-label" for="customFile">Escolher arquivo</label>
+    </div>
+    
+    <br />
+    <br />
+    <div>
+    <hr />
+        <center><h4 class="container-black">Data do Evento</h4></center>
+        <label>Data de início</label>
+        <input style="border-color: black; color: black;" type="datetime-local" name="DataHoraInicio" class="form-control">
+    </div>
+    <br />
+    <div>
+        <label>Data de término</label>
+        <input style="border-color: black; color: black;" type="datetime-local" name="DataHoraFim" class="form-control">
+    </div>
+    <br />
+    <hr />
+    <center><h4 class="container-black">Endereço</h4></center>
+    <div class="flex-content">
+        <div style="margin: 2px;">
+            <label>CEP</label>
+            <br />
+            <input style="border-color: black; color: black;" name="cep" type="number" id="cep" value="" size="10" maxlength="9" class="form-control" placeholder="Digite o CEP" />
+        </div>
+        <div style="margin: 2px;">
+            <label>Rua</label>
+            <br />
+            <input style="border-color: black; color: black;" name="Rua" type="text" id="rua" size="60" class="form-control" placeholder="Digite a rua" />
+        </div>
+        <div style="margin: 2px;">
+            <label>Bairro</label>
+            <br />
+            <input style="border-color: black; color: black;" name="Bairro" type="text" id="bairro" size="65" class="form-control" placeholder="Digite o bairro" />
+        </div>
+    </div>
+    <div>
+
+    </div>
+    <div class="flex-content">
+        <div style="margin: 2px; border-color: black;">
+            <br />
+            <label>Complemento</label>
+            <br />
+            <input style="border-color: black; color: black;" name="Complemento" type="text" size="50" class="form-control" placeholder="Digite o complemento" />
+        </div>
+        <div style="margin: 2px; border-color: black;">
+            <br />
+            <label>Número</label>
+            <br />
+            <input style="border-color: black; color: black;" name="Numero" type="number" size="15" class="form-control" placeholder="Digite o número" />
+        </div>
+        <div style="margin: 2px;">
+            <br />
+            <label>Cidade</label>
+            <br />
+            <input style="border-color: black; color: black;" name="cidade" type="text" id="cidade" size="50" class="form-control" placeholder="Digite a cidade" />
+        </div>
+        <div style="margin: 2px;">
+            <br />
+            <label>Estado</label>
+            <br />
+            <input style="border-color: black; color: black;" name="uf" type="text" id="uf" size="2" class="form-control" placeholder="UF" />
+        </div>
+    </div>
+
+    <hr />
+
+    <div class="form-group">
+        <input type="submit" class="btn btn-primary btn-block" value="Cadastrar">
+    </div>
+
+</form>
+
+<!-- Tags Script -->
+@section Scripts{
+    <script src="~/js/viacep.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#Participantes').select2();
+            $('#Tags').select2();
+        });
+
+    </script>
+}
+<!-- Tags Script -->

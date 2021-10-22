@@ -1,0 +1,30 @@
+﻿@model List<Domains.Evento> 
+@{
+    ViewData["Title"] = "Index";
+}
+
+@foreach (Domains.Evento item in Model)
+{
+    string Path = "~/imgEvento/" + item.ID + "/1.jpg";
+<div class="profile-uoloaded-post border-bottom-1 pb-5">
+    <img style="width: 908px; height: 359px;" src="@Url.Content(Path)" alt="" class="img-fluid">
+    <br>
+    <br>
+    <div>
+
+    </div>
+    <a class="post-title" href="/Evento/Details/@item.ID">
+        <h4>@item.Nome</h4>
+    </a>
+    <p>
+        @item.Descricao
+    </p>
+    <p>
+        Inicio: @item.DataHoraInicio
+    </p>
+    <p>
+        Fim: @item.DataHoraFim
+    </p>
+
+</div>
+}
